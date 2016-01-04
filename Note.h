@@ -12,6 +12,9 @@
             und neue Variable Qstring mNoteName hinzugefuegt
             QtDebug included
             mNoteName wird initialisiert
+            QFile* mNoteData hinzugefuegt
+            QTextStream* mNoteText hinzugefuegt,
+            um mit dem Notiztext zu interagieren
 
 *TODO:
 *           Ausdenken wie Notizdatei aussehen soll
@@ -23,15 +26,22 @@
 
 #include <QString> //QString
 #include <QtDebug> //qDebug
+#include <QFile>   //QFile
+#include <QTextStream>  //QTextStream
+
+#include <QStandardItem>
 
 class Note
 {
 public:
-    Note(const QString& notename);
+    Note(const QString& notepath);
 
 public:
     QString mNotePath;          //Pfad der Notizdatei
     QString mNoteName;          //Name der Notizdatei
+
+    QFile* mNoteData;           //Haellt den FilePtr einer Notizdatei
+    QTextStream* mNoteText;     //Stream zum interagieren mit dem Text
 };
 
 #endif // NOTE_H

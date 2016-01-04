@@ -4,6 +4,11 @@
 #include <QMainWindow>
 #include <QtDebug>
 #include <QDirIterator>
+#include <vector>
+
+#include "Note.h"
+
+
 namespace Ui {
 class MainWindow;
 }
@@ -19,6 +24,8 @@ public:
 private:
     Ui::MainWindow *ui;
     QDirIterator *dirIt;
+    std::vector<Note> mNotes;
+
 };
 
 #endif // MAINWINDOW_H

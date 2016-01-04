@@ -25,12 +25,12 @@ MainWindow::MainWindow(QWidget *parent) :
         dirIt->next();
         if (QFileInfo(dirIt->filePath()).isFile())
         {
-             qDebug()<<dirIt->filePath();
-            if (QFileInfo(dirIt->filePath()).suffix() == "txt")
-            {
-
-            }
+            mNotes.push_back(Note(dirIt->filePath()));
         }
+    }
+    for(auto& it : mNotes)
+    {
+        qDebug() << it.mNotePath;
     }
 }
 MainWindow::~MainWindow()

@@ -7,7 +7,11 @@
             03.12.2015
             Erstellt
             QString mNoteName hinzugefuegt
-
+            04.12.2015
+            mNoteName zu mNotePath geaendert
+            und neue Variable Qstring mNoteName hinzugefuegt
+            QtDebug included
+            mNoteName wird initialisiert
 
 *TODO:
 *           Ausdenken wie Notizdatei aussehen soll
@@ -18,15 +22,16 @@
 #define NOTE_H
 
 #include <QString> //QString
+#include <QtDebug> //qDebug
 
 class Note
 {
 public:
-    Note(QString& notename);
+    Note(const QString& notename);
 
-private:
+public:
+    QString mNotePath;          //Pfad der Notizdatei
     QString mNoteName;          //Name der Notizdatei
-
 };
 
 #endif // NOTE_H

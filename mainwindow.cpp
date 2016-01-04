@@ -38,6 +38,12 @@ MainWindow::MainWindow(QWidget *parent) :
         qDebug() << it.mNotePath;
     }
 
+    if(!mNotes.empty())
+    {
+       ui->textEdit->setText(*(mNotes[0].mNoteText));
+    }
+
+
 
 
 }
@@ -58,12 +64,51 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_listView_pressed(const QModelIndex &index)
 {
+     qDebug() << "KLICKED";
     TestIndex = index;
     for(auto& it : mNotes)
     {
         if(it.mNoteName == mNoteListModel->data(index).toString())
         {
-                ui->textEdit->setText(*(it.mNoteText));
+            ui->textEdit->setText(*(it.mNoteText));
+        }
+        else
+        {
+
+        }
+    }
+qDebug() << "ENDED CLICKED";
+}
+
+void MainWindow::on_mButtonSave_clicked()
+{
+
+    for(auto& it : mNotes)
+    {
+        if(it.mNoteName == mNoteListModel->data(TestIndex).toString())
+        {
+
+            it.save(TestIndex,ui->textEdit->toPlainText());
+
+        }
+        else
+        {
+
+        }
+    }
+
+
+}
+
+//SUPER LANGSAME LOESUNG ABER WAS SOLLS
+void MainWindow::on_textEdit_textChanged()
+{
+    for(auto& it : mNotes)
+    {
+        if(it.mNoteName == mNoteListModel->data(TestIndex).toString())
+        {
+            it.save(TestIndex,ui->textEdit->toPlainText());
+
         }
         else
         {
@@ -73,25 +118,39 @@ void MainWindow::on_listView_pressed(const QModelIndex &index)
 
 }
 
-void MainWindow::on_mButtonSave_clicked()
+void MainWindow::on_mButtonNew_clicked()
 {
-    for(auto& it : mNotes)
+    bool ok;
+    QString filename = QInputDialog::getText(this, tr("Neue Notiz"),
+                                                              tr("Notizname?"), QLineEdit::Normal,
+                                                              "", &ok);
+    qDebug() << "/notes/" + filename;
+    if (ok && !filename.isEmpty())
     {
-        if(it.mNoteName == mNoteListModel->data(TestIndex).toString())
-        {
-            QFile file(it.mNotePath);
-            file.open(QIODevice::WriteOnly);
-            QTextStream stream(&file);
-            stream << ui->textEdit->toPlainText();
-            stream.flush();
-            file.close();
-            it.reload();
-        }
-        else
-        {
+         QFile * testFile = new QFile("notes/" + filename);
+         if( ! testFile->open(QIODevice::WriteOnly) )
+         {
+           QMessageBox::warning(this, "", "Unable to open: " + filename , "OK");
+         }
+          delete testFile;
+     }
+     else if(ok && filename.isEmpty())
+     {
+         QMessageBox::warning(this, "", "Kein Dateiname angegeben" + filename , "OK");
+     }
+     else
+     {
 
-        }
-    }
+     }
+    Note temp(QDir::currentPath() + "/notes/" + filename);
+
+
+    mNotes.push_back(temp);
+
+    QStandardItem* Items = new QStandardItem(temp.mNoteName);
+
+
+    mNoteListModel->appendRow(Items);
 
 
 }

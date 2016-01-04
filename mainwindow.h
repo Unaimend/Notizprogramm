@@ -9,7 +9,9 @@
 #include <QStringListModel>
 #include "Note.h"
 #include <QTextDocumentWriter>
-
+#include <QFileDialog>
+#include <QInputDialog>
+#include <QMessageBox>
 namespace Ui {
 class MainWindow;
 }
@@ -26,6 +28,10 @@ private slots:
     void on_listView_pressed(const QModelIndex &index);
 
     void on_mButtonSave_clicked();
+
+    void on_textEdit_textChanged();
+
+    void on_mButtonNew_clicked();
 
 private:
     Ui::MainWindow *ui;

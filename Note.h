@@ -20,7 +20,7 @@
 *TODO:
 *           Ausdenken wie Notizdatei aussehen soll
 *           Tag-System ausarbeiten
-*           Wie werden Notizen in der GUI angezeigt?
+*           Wie werden Notizen in der GUI angezeigt?1
 *************************************/
 #ifndef NOTE_H
 #define NOTE_H

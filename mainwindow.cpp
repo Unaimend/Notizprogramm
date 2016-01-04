@@ -40,19 +40,16 @@ MainWindow::MainWindow(QWidget *parent) :
 
 
 
-
-
-    //BUG FALLS KEINE NOTES DA
-    while (!mNotes[0].mNoteText->atEnd())
-    {
-        QString line = mNotes[0].mNoteText->readLine();
-        ui->textEdit->append(line);
-    }
-
-
 }
+
+
+
+
+
+
 MainWindow::~MainWindow()
 {
+
     delete ui;
 }
 
@@ -61,21 +58,40 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_listView_pressed(const QModelIndex &index)
 {
+    TestIndex = index;
     for(auto& it : mNotes)
     {
         if(it.mNoteName == mNoteListModel->data(index).toString())
         {
-            ui->textEdit->setText("");
-            it.mNoteText->seek(0);
-            while (!it.mNoteText->atEnd())
-            {
-                QString line = it.mNoteText->readLine();
-                ui->textEdit->append(line);
-            }
+                ui->textEdit->setText(*(it.mNoteText));
         }
         else
         {
 
         }
     }
+
+}
+
+void MainWindow::on_mButtonSave_clicked()
+{
+    for(auto& it : mNotes)
+    {
+        if(it.mNoteName == mNoteListModel->data(TestIndex).toString())
+        {
+            QFile file(it.mNotePath);
+            file.open(QIODevice::WriteOnly);
+            QTextStream stream(&file);
+            stream << ui->textEdit->toPlainText();
+            stream.flush();
+            file.close();
+            it.reload();
+        }
+        else
+        {
+
+        }
+    }
+
+
 }

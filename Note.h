@@ -15,7 +15,8 @@
             QFile* mNoteData hinzugefuegt
             QTextStream* mNoteText hinzugefuegt,
             um mit dem Notiztext zu interagieren
-
+            void reload() hinzugefuegt.
+            mNoteText ist jetzt ein String der den Text haelt
 *TODO:
 *           Ausdenken wie Notizdatei aussehen soll
 *           Tag-System ausarbeiten
@@ -29,7 +30,7 @@
 #include <QFile>   //QFile
 #include <QTextStream>  //QTextStream
 
-#include <QStandardItem>
+
 
 class Note
 {
@@ -41,7 +42,13 @@ public:
     QString mNoteName;          //Name der Notizdatei
 
     QFile* mNoteData;           //Haellt den FilePtr einer Notizdatei
-    QTextStream* mNoteText;     //Stream zum interagieren mit dem Text
+    QString* mNoteText;     //Stream zum interagieren mit dem Text
+
+
+    /*********************
+    *Beschr. Laedt die Notiz neu
+    *************************/
+    void reload();
 };
 
 #endif // NOTE_H
